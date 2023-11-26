@@ -1,7 +1,85 @@
-h {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background: #f2f2f2;
-    color: black;
+.banner {
+    z-index: -1;
+  background-image: linear-gradient(
+      rgba(116, 235, 195, 0.5),
+      rgba(21, 39, 245, 0.5)
+    ),
+    url("../../assets/img/fondo_banner2.jpg");
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  padding: 180px 20px;
+  text-align: center;
+  position: relative; /* Agregamos posición relativa al contenedor del banner */
+}
+
+.banner-img-container {
+  position: relative; /* Agregamos posición relativa al contenedor de la imagen */
+}
+
+.banner-img-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.banner h1 {
+  margin-top: 0;
+  color: rgb(62, 62, 231);
+  font-weight: bold;
+}
+
+.banner p {
+  margin-bottom: 0;
+  color: rgb(255, 255, 255);
+}
+
+.appointment-section {
+  background-color: #f4f4f4;
+  padding: 50px 20px;
+}
+
+.appointment-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.appointment-container h2 {
+  margin-top: 0;
+}
+
+.appointment-container ol {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.appointment-container li {
+  margin-bottom: 10px;
+  text-align: center;
+  list-style-type: none;
+}
+
+.appointment-container li span {
+  background-color: rgb(62, 62, 231);
+  border-radius: 80px;
+  padding: 10px 15px;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.video-container {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+@media screen and (max-width: 767px) {
+  .video-container {
+    margin: 30px auto;
+    max-width: 560px;
+  }
 }

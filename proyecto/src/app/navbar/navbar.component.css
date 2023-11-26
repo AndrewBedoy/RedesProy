@@ -1,10 +1,9 @@
 a {
-    color: black;
+    color: white;
 }
 
 li:hover {
-    color: #1b487b;
-    background-color: #f2f2f2;
+    background-color: #4c67dc;
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 
@@ -16,5 +15,6 @@ li {
 }
 
 nav {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #2e50d0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }

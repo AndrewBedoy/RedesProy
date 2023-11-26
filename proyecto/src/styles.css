@@ -1,2 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Italianno&family=Raleway&family=Urbanist:wght@500&display=swap');
+
+* {
+    font-family: 'Cedarville Cursive', cursive;
+    font-family: 'Italianno', cursive;
+    font-family: 'Raleway', sans-serif;
+    font-family: 'Urbanist', sans-serif;
+    font-size: large;
+}

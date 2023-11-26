@@ -1,46 +1,48 @@
-<!-- inicio.component.html -->
-<div class="container mt-4">
-
-    <!-- Carrusel -->
-    <div id="carouselExample" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="../../assets/logo.jpg" class="d-block w-100" height="800" alt="Hospital Image 1">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Imagen 1</h5>
-            <p>Descripción de la imagen 1.</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img src="../../assets/logo.jpg" class="d-block w-100" height="800" alt="Hospital Image 2">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Imagen 2</h5>
-            <p>Descripción de la imagen 2.</p>
-          </div>
-        </div>
-        <!-- Agrega más imágenes según sea necesario -->
-      </div>
-      <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Anterior</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Siguiente</span>
-      </a>
-    </div>
-  
-    <!-- Información sobre Servicios -->
-    <div class="mt-4">
-      <h2>Servicios Ofrecidos</h2>
-      <p>Aquí puedes agregar información detallada sobre los servicios que ofrece el hospital. Esto podría incluir consultas médicas, servicios especializados, programación de citas, etc.</p>
-    </div>
-  
-    <!-- Área Adicional (puedes personalizar esto según tus necesidades) -->
-    <div class="mt-4">
-      <h2>Área Adicional</h2>
-      <p>Este es un espacio adicional donde puedes agregar cualquier información relevante o destacar aspectos específicos de tu hospital.</p>
-    </div>
-  
+<div class="banner">
+  <div class="banner-img-container">
+    <img
+      src="assets/img/principal/fondo_banner1.jpg"
+      alt="Imagen de fondo del banner"
+      id="banner-img"
+    />
   </div>
-  
+  <h1>BayMax</h1>
+  <h4>Una nueva forma de cuidar tu salud</h4>
+</div>
+<div class="video-container">
+  <iframe
+    width="100%"
+    height="415"
+    [src]="'https://www.youtube.com/embed/9XaS93WMRQQ'"
+    frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-inpicture"
+    allowfullscreen
+  ></iframe>
+</div>
+<section class="appointment-section">
+  <div class="appointment-container">
+    <h2>Agenda una cita en nuestra farmacia</h2>
+    <p>
+      Para agendar una cita en nuestra farmacia, sigue los siguientes pasos:
+    </p>
+    <br />
+    <ol>
+      <li>
+        <span>1</span> Ingresa a nuestra página web y selecciona la opción de
+        "Solicita cita".
+      </li>
+      <br /><br />
+      <li><span>2</span> Llena tus datos personales en el formulario.</li>
+      <br /><br />
+      <li>
+        <span>3</span> Selecciona la fecha y la hora que más te convenga para tu
+        cita.
+      </li>
+      <br /><br />
+      <li>
+        <span>4</span> ¡Listo! Te esperamos en nuestra farmacia el día y hora
+        que señalaste.
+      </li>
+    </ol>
+  </div>
+</section>
