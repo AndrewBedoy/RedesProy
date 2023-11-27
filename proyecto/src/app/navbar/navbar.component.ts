@@ -17,10 +17,15 @@ export class NavbarComponent {
 
   constructor(private authService: AuthService) {}
 
-  
+
 
   obtenerEstado(): boolean {
+    console.log('Obtener estado' + this.authService.obtenerEstado());
     return this.authService.obtenerEstado();
+  }
+
+  cerrarSesion() {
+    this.authService.cerrarSesion();
   }
 
   esAdministrador() {

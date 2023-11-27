@@ -23,9 +23,16 @@
           <a class="nav-link">Administrador</a>
         </li>
       </div>
-      <li class="nav-item" routerLink="/sesion">
-        <a class="nav-link">Iniciar sesión</a>
-      </li>
+      <div *ngIf="!obtenerEstado()">
+        <li class="nav-item" routerLink="/sesion">
+          <a class="nav-link">Iniciar Sesión</a>
+        </li>
+      </div>
+      <div *ngIf="obtenerEstado()">
+        <li class="nav-item" (click)="cerrarSesion()">
+          <a class="nav-link">Cerrar Sesión</a>
+        </li>
+      </div>
     </ul>
   </div>
 </nav>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { AlertService } from '../services/alert.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-sesion',
@@ -20,6 +21,10 @@ export class SesionComponent {
   direccion: string = '';
   telefono: string = '';
 
+  errorInicioSesion: boolean = false;
+
+  constructor(private alertService: AlertService, private authService: AuthService) {}
+
   mostrarRegistro() {
     this.mostrarLoginVar = false;
   }
@@ -33,7 +38,8 @@ export class SesionComponent {
   }
 
   registrar() {
-    console.log('Registrarse con:', this.nombre, this.apellidoPaterno, this.apellidoMaterno, this.direccion, this.telefono);
+    console.log('Registrarse con:', this.nombre, this.apellidoPaterno, 
+    this.apellidoMaterno, this.direccion, this.telefono);
 
     // Agregar el nuevo registro al arreglo
     const nuevoRegistro = {
@@ -52,6 +58,10 @@ export class SesionComponent {
 
   guardarRegistros() {
     localStorage.setItem('registros', JSON.stringify(this.registros));
+
+    this.alertService.mostrarAlerta('¡Bienvenido, '  + this.nombre + '!', 
+    'Tu cuenta ha sido registrada correctamente', 'success');
+
     this.nombre = "";
     this.apellidoPaterno = "";
     this.apellidoMaterno = "";
@@ -59,7 +69,6 @@ export class SesionComponent {
     this.telefono = "";
     this.correo = "";
     this.contrasena = "";
-    alert('Registro exitoso');
   }
 
   cargarRegistros() {
@@ -69,21 +78,21 @@ export class SesionComponent {
     }
   }
 
-  iniciarSesion(correo: string, contrasena: string): boolean {
+  iniciarSesion(): boolean {
     // Buscar en los registros
-    const usuario = this.registros.find(registro => registro.correo === correo && registro.contrasena === contrasena);
+    const usuario = this.registros.find(registro => registro.correo === this.correo 
+      && registro.contrasena === this.contrasena);
   
     if (usuario) {
-      console.log('Inicio de sesión exitoso');
-      // Realizar las acciones necesarias después de un inicio de sesión exitoso
-      console.log(usuario);
+      this.errorInicioSesion = false;
+      this.authService.iniciarSesion();
+      this.alertService.mostrarAlertaConRedireccion('Bienvenido, ' +
+        usuario.nombre + '!', 'Inicio de sesión correcto', 'success', '/cuenta');
       return true;
     } else {
-      console.log('Inicio de sesión fallido');
-      // Realizar las acciones necesarias después de un inicio de sesión fallido
+      this.authService.cerrarSesion();
+      this.errorInicioSesion = true;
       return false;
     }
   }
-  
-
 }

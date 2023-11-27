@@ -4,12 +4,14 @@ import { InicioComponent } from './inicio/inicio.component';
 import { DoctoresComponent } from './doctores/doctores.component';
 import { ContactoComponent } from './contacto/contacto.component';
 import { SesionComponent } from './sesion/sesion.component';
+import { CuentaComponent } from './cuenta/cuenta.component';
 
 const routes: Routes = [
   { path: '', component: InicioComponent },
   { path: 'doctores', component: DoctoresComponent},
   { path: 'contacto', component: ContactoComponent},
   { path: 'sesion', component: SesionComponent},
+  { path: 'cuenta', component: CuentaComponent},
   { path: '**', redirectTo: '', pathMatch: 'full' } 
 ];
 
