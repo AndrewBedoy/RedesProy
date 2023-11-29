@@ -21,8 +21,6 @@ export class SesionComponent {
   direccion: string = 'Calle Ejemplo 123';
   telefono: string = '1234567890';
   idUltimoRegistro: number = 0;
-
-
   errorInicioSesion: boolean = false;
 
   constructor(private alertService: AlertService, private authService: AuthService) {}
@@ -131,11 +129,25 @@ export class SesionComponent {
         this.errorInicioSesion = false;
         this.authService.iniciarSesion(usuario);
         this.alertService.mostrarAlertaConRedireccion(
-          'Bienvenido, ' + usuario.nombre + '!',
+          '¡Bienvenido, ' + usuario.nombre + '!',
           'Inicio de sesión correcto',
           'success',
           '/cuenta'
         );
+
+        // Verificar el tipo de usuario
+        try {
+          const esAdmin = await this.obtenerAdministradores(usuario.id, usuario);
+          const esDoctor = await this.obtenerDoctores(usuario.id, usuario);
+          if (!esAdmin && !esDoctor) {
+            this.authService.tipo = 'paciente';
+            console.log('El usuario es paciente');
+          }
+        } catch (error) {
+          console.error('Error al verificar el tipo de usuario:', error);
+          // Manejar el error según sea necesario
+        }
+
         return true;
       } else {
         this.authService.cerrarSesion();
@@ -147,5 +159,63 @@ export class SesionComponent {
       return false;
     }
   }
+
+  async obtenerAdministradores(idUsuario: number, usuario: any): Promise<boolean> {
+    try {
+      const url = `http://localhost:3000/administradores/${idUsuario}`;
+      const response = await fetch(url);
+      const data = await response.json();
   
+      if (response.ok) {
+        if (data.esAdministrador) {
+          console.log('El usuario es administrador');
+          this.authService.iniciarSesion(usuario);
+          this.authService.tipo = 'administrador';
+          return true;
+        }
+        else{
+          return true;
+        }
+      } else {
+        console.error('Error en la respuesta del servidor:', response.status);
+        throw new Error('Error en la respuesta del servidor');
+      }
+    } catch (error) {
+      console.error('Error al obtener información de administradores:', error);
+      this.authService.cerrarSesion();
+      this.alertService.mostrarAlerta('Error al iniciar sesión', 'Error', 'error');
+      throw error; // Propagar el error para que la función llamadora pueda manejarlo
+    }
+  }
+  
+
+  async obtenerDoctores(idUsuario: number, usuario: any): Promise<boolean> {
+    try {
+      const url = `http://localhost:3000/doctores/${idUsuario}`;
+      const response = await fetch(url);
+      const data = await response.json();
+  
+      if (response.ok) {
+        if (data.esDoctor) {
+          console.log('El usuario es doctor');
+          this.authService.iniciarSesion(usuario);
+          this.authService.tipo = 'doctor';
+          return true;
+        }
+        else{
+          return true;
+        }
+      } else {
+        console.error('Error en la respuesta del servidor:', response.status);
+        throw new Error('Error en la respuesta del servidor');
+      }
+    } catch (error) {
+      console.error('Error al obtener información de doctores:', error);
+      this.authService.cerrarSesion();
+      this.alertService.mostrarAlerta('Error al iniciar sesión', 'Error', 'error');
+      throw error; // Propagar el error para que la función llamadora pueda manejarlo
+    }
+  }
+  
+    
 }

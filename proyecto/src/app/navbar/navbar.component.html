@@ -18,7 +18,7 @@
           <a class="nav-link">Cuenta</a>
         </li>
       </div>
-      <div *ngIf="esAdmin">
+      <div *ngIf="this.authService.tipo == 'administrador'">
         <li class="nav-item" routerLink="/administrador">
           <a class="nav-link">Administrador</a>
         </li>

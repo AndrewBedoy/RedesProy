@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -15,17 +16,18 @@ export class NavbarComponent {
   
   esAdmin: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService,
+    private router: Router) {}
 
 
 
   obtenerEstado(): boolean {
-    console.log('Obtener estado' + this.authService.obtenerEstado());
     return this.authService.obtenerEstado();
   }
 
   cerrarSesion() {
     this.authService.cerrarSesion();
+    this.router.navigate(['/']);
   }
 
   esAdministrador() {

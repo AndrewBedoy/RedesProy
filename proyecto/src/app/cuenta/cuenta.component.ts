@@ -8,9 +8,13 @@ import { AuthService } from '../services/auth.service';
 })
 export class CuentaComponent {
   usuario: any;
+  tipo: string = '';
+  autenticado: boolean = false;
   constructor(authService: AuthService) {
+    console.log(authService.tipo);
     this.usuario = authService.usuario;
-    console.log(this.usuario);
+    this.tipo = authService.tipo;
+    this.autenticado = authService.obtenerEstado();
    }
 
 }
