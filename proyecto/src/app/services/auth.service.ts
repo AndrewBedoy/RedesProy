@@ -6,14 +6,18 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   private estaAutenticado: boolean = false;
 
-  iniciarSesion() {
+  usuario: any;
+
+  iniciarSesion(usuario: any) {
     // Lógica para iniciar sesión (puedes implementarla según tus necesidades)
     this.estaAutenticado = true;
+    this.usuario = usuario;
   }
 
   cerrarSesion() {
     // Lógica para cerrar sesión
     this.estaAutenticado = false;
+    this.usuario = null;
   }
 
   obtenerEstado(): boolean {

@@ -6,7 +6,8 @@ import Swal from 'sweetalert2';
   providedIn: 'root'
 })
 export class AlertService {
-  
+  static mostrarAlertaConRedireccion: any;
+
   constructor(private router: Router) {}
 
   mostrarAlertaConRedireccion(titulo: string, mensaje: string, tipo: 'success' | 'error' | 'warning' | 'info', ruta: string) {
