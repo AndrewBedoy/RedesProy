@@ -34,7 +34,7 @@ export class SesionComponent {
   }
 
   async enviarDatosAlServidor(datos: any): Promise<void> {
-    const url = 'http://localhost:3000/registro';
+    const url = 'http://172.16.113.156:3000/registro';
     const opciones = {
       method: 'POST',
       headers: {
@@ -61,7 +61,7 @@ export class SesionComponent {
     console.log('Registrarse con:', this.nombre, this.apellido_p, this.apellidoMaterno, this.direccion, this.telefono);
   
     try {
-      const url = 'http://localhost:3000/registro/idUltimoRegistro';
+      const url = 'http://172.16.113.156:3000/registro/idUltimoRegistro';
       const opciones = {
         method: 'GET',
         headers: {
@@ -103,7 +103,7 @@ export class SesionComponent {
   async iniciarSesion(): Promise<boolean> {
     try {
       // Realizar una solicitud al servidor para obtener los registros.
-      const url = 'http://localhost:3000/registros'; // Reemplaza con la URL correcta de tu servidor.
+      const url = 'http://172.16.113.156:3000/registros'; // Reemplaza con la URL correcta de tu servidor.
       const opciones = {
         method: 'GET',
         headers: {
@@ -162,7 +162,7 @@ export class SesionComponent {
 
   async obtenerAdministradores(idUsuario: number, usuario: any): Promise<boolean> {
     try {
-      const url = `http://localhost:3000/administradores/${idUsuario}`;
+      const url = `http://172.16.113.156:3000/administradores/${idUsuario}`;
       const response = await fetch(url);
       const data = await response.json();
   
@@ -191,7 +191,7 @@ export class SesionComponent {
 
   async obtenerDoctores(idUsuario: number, usuario: any): Promise<boolean> {
     try {
-      const url = `http://localhost:3000/doctores/${idUsuario}`;
+      const url = `http://172.16.113.156:3000/doctores/${idUsuario}`;
       const response = await fetch(url);
       const data = await response.json();
   
