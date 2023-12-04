@@ -139,17 +139,24 @@ export class SesionComponent {
         try {
           const esAdmin = await this.obtenerAdministradores(usuario.id, usuario);
           const esDoctor = await this.obtenerDoctores(usuario.id, usuario);
+          if(esAdmin)
+          console.log('El usuario es administrador');
+          if(esDoctor)
+          console.log('El usuario es doctor');
           if (!esAdmin && !esDoctor) {
             this.authService.tipo = 'paciente';
             console.log('El usuario es paciente');
           }
+          else
+          console.log('El usuario no es paciente, administrador o doctor');
         } catch (error) {
           console.error('Error al verificar el tipo de usuario:', error);
           // Manejar el error según sea necesario
         }
 
         return true;
-      } else {
+      }
+      else {
         this.authService.cerrarSesion();
         this.errorInicioSesion = true;
         return false;
