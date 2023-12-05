@@ -1,7 +1,7 @@
 <!-- ngIf else para mostrar un mensaje de "no deberías estar aquí" si no tiene sesión iniciada-->
 <div *ngIf="autenticado; else noSesion">
-    <h1>Hola, {{usuario.nombre}}</h1>
-    <h2>Tipo: {{tipo}}</h2>
+    <h1>{{saludo}}, {{usuario.nombre}}</h1>
+    
 </div>
 <ng-template #noSesion>
     <h1><a routerLink="/sesion">Inicia sesión para continuar</a></h1>

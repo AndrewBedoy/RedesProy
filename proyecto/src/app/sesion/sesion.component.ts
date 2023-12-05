@@ -58,7 +58,8 @@ export class SesionComponent {
   }
   
   async registrar() {
-    console.log('Registrarse con:', this.nombre, this.apellido_p, this.apellidoMaterno, this.direccion, this.telefono);
+    console.log('Registrarse con:', this.nombre, this.apellido_p,
+      this.apellidoMaterno, this.direccion, this.telefono);
   
     try {
       const url = 'http://localhost:3000/registro/idUltimoRegistro';
@@ -139,21 +140,26 @@ export class SesionComponent {
         try {
           const esAdmin = await this.obtenerAdministradores(usuario.id, usuario);
           const esDoctor = await this.obtenerDoctores(usuario.id, usuario);
-          if(esAdmin)
-          console.log('El usuario es administrador');
-          if(esDoctor)
-          console.log('El usuario es doctor');
+        
+          if (esAdmin) {
+            console.log('El usuario es administrador: ' + esAdmin);
+            this.authService.tipo = 'administrador';
+          }
+        
+          if (esDoctor) {
+            console.log('El usuario es doctor' + esDoctor);
+            this.authService.tipo = 'doctor';
+          }
+        
           if (!esAdmin && !esDoctor) {
             this.authService.tipo = 'paciente';
             console.log('El usuario es paciente');
           }
-          else
-          console.log('El usuario no es paciente, administrador o doctor');
-        } catch (error) {
-          console.error('Error al verificar el tipo de usuario:', error);
-          // Manejar el error según sea necesario
+        
         }
-
+        catch (error) {
+          console.error('Error al verificar el tipo de usuario:', error);
+        }
         return true;
       }
       else {
@@ -174,15 +180,7 @@ export class SesionComponent {
       const data = await response.json();
   
       if (response.ok) {
-        if (data.esAdministrador) {
-          console.log('El usuario es administrador');
-          this.authService.iniciarSesion(usuario);
-          this.authService.tipo = 'administrador';
-          return true;
-        }
-        else{
-          return true;
-        }
+        return data.esAdministrador;
       } else {
         console.error('Error en la respuesta del servidor:', response.status);
         throw new Error('Error en la respuesta del servidor');
@@ -203,15 +201,7 @@ export class SesionComponent {
       const data = await response.json();
   
       if (response.ok) {
-        if (data.esDoctor) {
-          console.log('El usuario es doctor');
-          this.authService.iniciarSesion(usuario);
-          this.authService.tipo = 'doctor';
-          return true;
-        }
-        else{
-          return true;
-        }
+        return data.esDoctor;
       } else {
         console.error('Error en la respuesta del servidor:', response.status);
         throw new Error('Error en la respuesta del servidor');
