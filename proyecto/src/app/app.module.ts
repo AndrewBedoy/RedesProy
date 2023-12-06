@@ -13,7 +13,8 @@ import { ContactoComponent } from './contacto/contacto.component';
 import { RegistroComponent } from './registro/registro.component';
 import { SesionComponent } from './sesion/sesion.component';
 import { CuentaComponent } from './cuenta/cuenta.component';
-import { AdminComponent } from './admin/admin.component';7
+import { AdminComponent } from './admin/admin.component';
+import { MedicamentosComponent } from './medicamentos/medicamentos.component';7
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AdminComponent } from './admin/admin.component';7
     RegistroComponent,
     SesionComponent,
     CuentaComponent,
-    AdminComponent
+    AdminComponent,
+    MedicamentosComponent
   ],
   imports: [
     BrowserModule,
