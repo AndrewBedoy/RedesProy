@@ -1,1 +1,37 @@
-<p>medicamentos works!</p>
+<body class="container mt-5">
+    <div>
+        <label for="nombreMedicamento">Nombre genérico del medicamento:</label>
+        <input type="text" id="nombreMedicamento" [(ngModel)]="nombreMedicamento" />
+        <button (click)="buscarMedicamento()">Buscar</button>
+    </div>
+  
+  <!-- medicamentos.component.html -->
+
+<div *ngIf="medicamento" class="card">
+    <div class="card-body">
+      <h2 class="card-title">{{ medicamento.openfda.generic_name[0] }}</h2>
+      
+      <p><strong>Marca:</strong> {{ medicamento.openfda.brand_name[0] }}</p>
+      <p><strong>Fabricante:</strong> {{ medicamento.openfda.manufacturer_name[0] }}</p>
+      <p><strong>Tipo de Producto:</strong> {{ medicamento.openfda.product_type[0] }}</p>
+  
+      <!-- Nuevos campos -->
+      <p *ngIf="medicamento.purpose && medicamento.purpose.length">
+        <strong>Propósito:</strong> {{ medicamento.purpose.join(', ') }}
+      </p>
+  
+      <p *ngIf="medicamento.warnings && medicamento.warnings.length">
+        <strong>Advertencias:</strong> {{ medicamento.warnings.join(', ') }}
+      </p>
+  
+      <p><strong>Ruta:</strong> {{ medicamento.openfda.route[0] }}</p>
+      <p><strong>Dosificación y Administración:</strong> {{ medicamento.dosage_and_administration[0] }}</p>
+      <p><strong>Embarazo o Lactancia:</strong> {{ medicamento.pregnancy_or_breast_feeding[0] }}</p>
+      <p><strong>Detener uso:</strong> {{ medicamento.stop_use[0] }}</p>
+      <p><strong>Almacenamiento y Manejo:</strong> {{ medicamento.storage_and_handling[0] }}</p>
+      <p><strong>No utilizar en caso de:</strong> {{ medicamento.do_not_use[0] }}</p>
+      <p><strong>Ingrediente Activo:</strong> {{ medicamento.active_ingredient[0] }}</p>
+    </div>
+  </div>
+  
+</body>
