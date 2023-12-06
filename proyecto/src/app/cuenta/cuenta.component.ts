@@ -49,7 +49,6 @@ export class CuentaComponent {
     }
     catch {
       console.log("Error al obtener los datos de las alergias");
-
     }
   }*/
 

@@ -12,7 +12,8 @@ import { DoctoresComponent } from './doctores/doctores.component';
 import { ContactoComponent } from './contacto/contacto.component';
 import { RegistroComponent } from './registro/registro.component';
 import { SesionComponent } from './sesion/sesion.component';
-import { CuentaComponent } from './cuenta/cuenta.component';7
+import { CuentaComponent } from './cuenta/cuenta.component';
+import { AdminComponent } from './admin/admin.component';7
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CuentaComponent } from './cuenta/cuenta.component';7
     ContactoComponent,
     RegistroComponent,
     SesionComponent,
-    CuentaComponent
+    CuentaComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
