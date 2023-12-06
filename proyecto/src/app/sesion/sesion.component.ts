@@ -127,6 +127,7 @@ export class SesionComponent {
       );
 
       if (usuario) {
+
         this.errorInicioSesion = false;
         this.authService.iniciarSesion(usuario);
         this.alertService.mostrarAlertaConRedireccion(
@@ -155,7 +156,8 @@ export class SesionComponent {
             this.authService.tipo = 'paciente';
             console.log('El usuario es paciente');
           }
-        
+          usuario.tipo = this.authService.tipo;
+          localStorage.setItem('usuario', JSON.stringify(usuario));
         }
         catch (error) {
           console.error('Error al verificar el tipo de usuario:', error);

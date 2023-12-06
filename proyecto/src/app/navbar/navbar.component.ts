@@ -17,9 +17,15 @@ export class NavbarComponent {
   esAdmin: boolean = false;
 
   constructor(public authService: AuthService,
-    private router: Router) {}
-
-
+    private router: Router) {
+      const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+      if(usuario) {
+        authService.iniciarSesion(usuario);
+      }
+      else {
+        console.log('No hay usuario');
+      }
+    }
 
   obtenerEstado(): boolean {
     return this.authService.obtenerEstado();
@@ -28,6 +34,7 @@ export class NavbarComponent {
   cerrarSesion() {
     this.authService.cerrarSesion();
     this.router.navigate(['/']);
+    localStorage.removeItem('usuario');
   }
 
   esAdministrador() {
