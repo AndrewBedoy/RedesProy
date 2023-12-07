@@ -23,4 +23,9 @@ export class OpenfdaService {
 
     return this.http.get<any>(this.apiUrl, { headers, params });
   }
+
+  getMedicamentos(): Observable<any> {
+    const url = `${this.apiUrl}?api_key=${this.apiKey}&limit=100`; // Cambia el límite según tus necesidades
+    return this.http.get<any>(url);
+  }
 }
