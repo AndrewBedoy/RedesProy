@@ -35,7 +35,7 @@ export class AdminComponent {
 
   async obtenerUsuarios() {
     try {
-      const url = 'http://localhost:3000/registros';
+      const url = 'http://192.168.50.75:3000/registros';
       const opciones = {
         method: 'GET',
         headers: {
@@ -54,7 +54,7 @@ export class AdminComponent {
 
   async obtenerDoctores() {
     try {
-      const url = 'http://localhost:3000/doctores';
+      const url = 'http://192.168.50.75:3000/doctores';
       const opciones = {
         method: 'GET',
         headers: {
@@ -73,7 +73,7 @@ export class AdminComponent {
 
   async obtenerPacientes() {
     try {
-      const url = 'http://localhost:3000/pacientes';
+      const url = 'http://192.168.50.75:3000/pacientes';
       const opciones = {
         method: 'GET',
         headers: {
@@ -92,7 +92,7 @@ export class AdminComponent {
 
   async obtenerAdmins() {
     try {
-      const url = 'http://localhost:3000/admins';
+      const url = 'http://192.168.50.75:3000/admins';
       const opciones = {
         method: 'GET',
         headers: {

@@ -43,7 +43,7 @@ export class DoctoresComponent {
   async verDoctores() {
     try {
 
-      const url = 'http://localhost:3000/doctores';
+      const url = 'http://192.168.50.75:3000/doctores';
 
       const opciones = {
         method: 'GET',

@@ -65,7 +65,7 @@ export class CuentaComponent {
 
   async verificarCitas() {
     try {
-      const url = 'http://localhost:3000/citas?idUsuario=' + this.usuario.id;
+      const url = 'http://192.168.50.75:3000/citas?idUsuario=' + this.usuario.id;
       const opciones = {
         method: 'GET',
         headers: {
@@ -111,7 +111,7 @@ export class CuentaComponent {
 
   async verificarAlergias() {
     try {
-      const url = 'http://localhost:3000/alergias';
+      const url = 'http://192.168.50.75:3000/alergias';
       const opciones = {
         method: 'GET',
         headers: {
@@ -130,7 +130,7 @@ export class CuentaComponent {
 
   async verificarPacientes() {
     try {
-      const url = 'http://localhost:3000/pacientes';
+      const url = 'http://192.168.50.75:3000/pacientes';
       const opciones = {
         method: 'GET',
         headers: {
@@ -162,7 +162,7 @@ export class CuentaComponent {
         id_paciente: idPaciente,
       };
   
-      const url = 'http://localhost:3000/registrarAlergia';
+      const url = 'http://192.168.50.75:3000/registrarAlergia';
       const opciones = {
         method: 'POST',
         headers: {
