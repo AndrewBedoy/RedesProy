@@ -1,1 +1,51 @@
-<p>doctores works!</p>
+<div class="container mt-4">
+  <h2 class="mb-4">Conoce a nuestros especialistas</h2>
+  <p>
+    Tener a los mejores especialistas en el área de la salud es nuestra
+    prioridad. Por eso, te presentamos a nuestros médicos.
+  </p>
+
+  <!-- Tabla que presenta a los doctores con nombre, apellido y especialidad -->
+  <!-- Tabla que presenta a los doctores con nombre, apellido y especialidad -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Especialidad</th>
+      <th>Seleccionar Fecha</th>
+      <th>Seleccionar Hora</th>
+      <th>Agendar Cita</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let doctor of doctores; let i = index">
+      <td>
+        {{ doctor.nombre + " " + doctor.apellido_p + " " + doctor.apellido_m }}
+      </td>
+      <td>{{ doctor.doctor.especialidad }}</td>
+      <td>
+        <mat-form-field>
+          <mat-label>Selecciona una fecha</mat-label>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="doctor.selectedDate"/>
+        
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </td>
+      <td>
+        <select [(ngModel)]="selectedTime" name="selectedTime">
+          <option *ngFor="let hora of horasDisponibles" [value]="hora.value">{{ hora.display }}</option>
+        </select>
+      </td>
+      <td>
+        <button (click)="capturar(i)">Agendar cita</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+  <div id="iframeContainer"></div>
+</div>
