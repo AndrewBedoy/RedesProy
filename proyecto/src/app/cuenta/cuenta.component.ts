@@ -47,8 +47,6 @@ export class CuentaComponent {
     }
   }
 
-  
-
   pacienteActual: any;
   abrirModal(paciente: any) {
     this.pacienteActual = paciente;
