@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { AlertService } from '../services/alert.service';
+
 import {
   MatDatepicker,
   MatDatepickerModule,
@@ -11,6 +12,7 @@ import { PickerInteractionMode } from 'igniteui-angular';
 import { Time } from '@angular/common';
 import { TimeFormatPipe } from 'igniteui-angular/lib/time-picker/time-picker.pipes';
 
+
 @Component({
   selector: 'app-doctores',
   templateUrl: './doctores.component.html',
@@ -18,6 +20,7 @@ import { TimeFormatPipe } from 'igniteui-angular/lib/time-picker/time-picker.pip
 })
 export class DoctoresComponent {
   doctores: any[] = [];
+
   selectedDate!: Date;
   selectedTime: string = '';
   numId: number = 0;
@@ -32,18 +35,22 @@ export class DoctoresComponent {
   ) {
     this.verDoctores();
     this.selectedDate = new Date(); // Asegúrate de inicializarlas aquí o en algún otro lugar necesario
+
   }
 
   // leer el archivo json de usuarios y doctores y mostrarlos en la tabla
   async verDoctores() {
     try {
+
       const url = 'http://192.168.0.26:3000/doctores';
+
       const opciones = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
       };
+
 
       const response = await fetch(url, opciones);
       const data = await response.json();
@@ -109,12 +116,7 @@ export class DoctoresComponent {
 
     
     }
-  
-    
-  
-
  
-
   formatDate(date: Date): string {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
@@ -127,52 +129,6 @@ export class DoctoresComponent {
     this.numId++;
     return this.numId;
   }
-  /*mostrarIframe() {
-    const iframeContainer = document.getElementById('iframeContainer');
-
-
-   
-
-    if(!this.authService.obtenerEstado()) {
-      this.alertService.mostrarAlerta(
-        'No has iniciado sesión',
-        'Inicia sesión para poder agendar una cita.',
-        'warning'
-      );
-    }
-    else if (iframeContainer) {
-      const iframe = document.createElement('iframe');
-      iframe.src = 'https://fabmac865.youcanbook.me/?embed=true';
-      iframe.id = 'ycbm';
-      iframe.style.width = '100%';
-      iframe.style.height = '1000px';
-      iframe.style.border = '0px';
-      iframe.style.backgroundColor = 'transparent';
-      iframe.frameBorder = '0';
-
-      iframeContainer.appendChild(iframe);
   
-      // Ajustar la altura del iframe después de cargar
-      iframe.onload = function() {
-        if (iframe.contentWindow && iframe.contentWindow.document) {
-          const height = iframe.contentWindow.document.body.scrollHeight + 'px';
-          iframe.style.height = height;
-        }
 
-        
-        
-      };
-    }
-  }
-  /*mostrarIframe() {
-    //https://fabmac865.youcanbook.me/
-    if(this.authService.obtenerEstado()) {
-      this.alertService.mostrarAlertaConRedireccion(
-        'Redirigiendo...',
-        'Serás redirigido a la página de citas',
-        'info',
-        'https://fabmac865.youcanbook.me/'
-      );
-    }
-  }*/
 }
