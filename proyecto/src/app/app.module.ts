@@ -52,7 +52,6 @@ import { MedicamentosComponent } from './medicamentos/medicamentos.component';7
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-
     BrowserAnimationsModule,
     MatDatepickerModule,
     MatInputModule,
@@ -60,10 +59,8 @@ import { MedicamentosComponent } from './medicamentos/medicamentos.component';7
     IgxTimePickerModule,
 	  IgxInputGroupModule,
 	  IgxIconModule,
-
     HttpClientModule,
     MatPaginatorModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]

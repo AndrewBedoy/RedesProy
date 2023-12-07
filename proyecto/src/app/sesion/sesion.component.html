@@ -2,7 +2,7 @@
 	<div *ngIf="mostrarLoginVar; else registroTemplate" class="card">
 		<div class="card-body">
 			<!-- Contenido para el inicio de sesión -->
-			<h2 class="card-title">Iniciar Sesión</h2>
+			<h4 class="my-3">Iniciar Sesión</h4>
 			<form (ngSubmit)="iniciarSesion()">
 				<!-- Campos de inicio de sesión (correo electrónico, contraseña, etc.) -->
 				<div class="form-group">
@@ -32,7 +32,7 @@
 <div class="card mt-3">
 		<div class="card-body">
 		<!-- Contenido para el registro -->
-		<h2 class="card-title">Registro</h2>
+		<h4 class="my-3">Registro</h4>
 		<form (ngSubmit)="registrar()">
 			<!-- Campos de registro (nombre, correo electrónico, contraseña, etc.) -->
 			<div class="mb-3">

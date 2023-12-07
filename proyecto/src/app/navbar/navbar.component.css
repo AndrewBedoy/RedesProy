@@ -18,3 +18,7 @@ nav {
     background-color: #2e50d0;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
+
+h {
+    font-size: small;
+}

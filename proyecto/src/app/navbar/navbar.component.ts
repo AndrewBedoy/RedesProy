@@ -21,6 +21,7 @@ export class NavbarComponent {
       const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
       if(usuario) {
         authService.iniciarSesion(usuario);
+        authService.tipo = usuario.tipo;
       }
       else {
         console.log('No hay usuario');

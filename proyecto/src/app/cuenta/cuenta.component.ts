@@ -15,6 +15,7 @@ export class CuentaComponent {
   alergias: any;
   pacientes: any;
   tabla: string = 'tPacientes';
+  citas: any;
 
   alergiasPorPaciente = new Map<number, string[]>();
   alertService: any;
@@ -57,8 +58,28 @@ export class CuentaComponent {
     await this.verificarPacientes();
   }
 
-  verCitas() {
-    throw new Error('Method not implemented.');
+  async verCitas() {
+    this.tabla = 'tCitas';
+    await this.verificarCitas();
+  }
+
+  async verificarCitas() {
+    try {
+      const url = 'http://localhost:3000/citas?idUsuario=' + this.usuario.id;
+      const opciones = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+  
+      const response = await fetch(url, opciones);
+      const data = await response.json();
+      this.citas = data;
+    }
+    catch {
+      console.log("Error al obtener los datos de las citas");
+    }
   }
 
   async verAlergiasPacientes() {

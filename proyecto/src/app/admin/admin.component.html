@@ -1,0 +1,111 @@
+<div *ngIf="usuario.tipo == 'administrador'; else noAdmin">
+  <div>
+    <!-- Botones de pestañas -->
+    
+    <div class="text-center my-3">
+      <button class="btn btn-primary mx-5" (click)="tabla='usuarios'">Mostrar Usuarios</button>
+      <button class="btn btn-primary mx-5" (click)="tabla='pacientes'">Mostrar Pacientes</button>
+      <button class="btn btn-primary mx-5" (click)="tabla='doctores'">Mostrar Doctores</button>
+      <button class="btn btn-primary mx-5" (click)="tabla='admins'">Mostrar Admins</button>
+    </div>
+
+    <div [ngSwitch]="tabla">
+      <div *ngSwitchCase="'usuarios'">
+        <h4 class="mx-auto text-center">Información sobre todos los usuarios</h4>
+        <table class="table table-striped table-bordered mx-auto text-center" style="width: 80%; align-items: center;">
+          <thead title="Usuarios">
+            <tr>
+              <th>Nombre completo</th>
+              <th>Dirección</th>
+              <th>Correo</th>
+              <th>Telefono</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let usuario of usuarios">
+              <td>{{ usuario.nombre + ' ' + usuario.apellido_p + ' ' + usuario.apellido_m }}</td>
+              <td>{{ usuario.direccion }}</td>
+              <td>{{ usuario.correo }}</td>
+              <td>{{ usuario.telefono }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+      <div *ngSwitchCase="'doctores'">
+        <h4 class="mx-auto text-center">Información sobre todos los doctores</h4>
+        <table class="table table-striped table-bordered mx-auto text-center" style="width: 80%; align-items: center;">
+          <thead title="Doctores">
+            <tr>
+              <th>Nombre completo</th>
+              <th>Dirección</th>
+              <th>Correo</th>
+              <th>Telefono</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let doctor of doctores">
+              <td>{{ doctor.nombre + ' ' + doctor.apellido_p + ' ' + doctor.apellido_m }}</td>
+              <td>{{ doctor.direccion }}</td>
+              <td>{{ doctor.correo }}</td>
+              <td>{{ doctor.telefono }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngSwitchCase="'pacientes'">
+        <h4 class="mx-auto text-center">Información sobre todos los pacientes</h4>
+        <table class="table table-striped table-bordered mx-auto text-center" style="width: 80%; align-items: center;">
+          <thead title="Pacientes">
+            <tr>
+              <th>Nombre completo</th>
+              <th>Dirección</th>
+              <th>Correo</th>
+              <th>Telefono</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let paciente of pacientes">
+              <td>{{ paciente.nombre + ' ' + paciente.apellido_p + ' ' + paciente.apellido_m }}</td>
+              <td>{{ paciente.direccion }}</td>
+              <td>{{ paciente.correo }}</td>
+              <td>{{ paciente.telefono }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngSwitchCase="'admins'">
+        <h4 class="mx-auto text-center">Información sobre todos los admins</h4>
+        <table class="table table-striped table-bordered mx-auto text-center" style="width: 80%; align-items: center;">
+          <thead title="Administradores">
+            <tr>
+              <th>Nombre completo</th>
+              <th>Dirección</th>
+              <th>Correo</th>
+              <th>Telefono</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let admin of admins">
+              <td>{{ admin.nombre + ' ' + admin.apellido_p + ' ' + admin.apellido_m }}</td>
+              <td>{{ admin.direccion }}</td>
+              <td>{{ admin.correo }}</td>
+              <td>{{ admin.telefono }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngSwitchDefault>
+        <!-- Contenido por defecto si no se selecciona ninguna pestaña -->
+        <p>Selecciona una pestaña para mostrar la información correspondiente.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #noAdmin>
+  <h3>Lo sentimos, no tienes permisos para ver esta página.</h3>
+</ng-template>

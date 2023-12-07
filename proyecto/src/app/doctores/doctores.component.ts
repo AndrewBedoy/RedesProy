@@ -26,6 +26,7 @@ export class DoctoresComponent {
   numId: number = 0;
   correo: string = 'prueba@ejemplo.com';
   contrasena: string = 'contrasenaPrueba';
+  usuario: any;
   public mode: PickerInteractionMode = PickerInteractionMode.DropDown;
   public format = 'hh:mm tt';
 
@@ -35,14 +36,14 @@ export class DoctoresComponent {
   ) {
     this.verDoctores();
     this.selectedDate = new Date(); // Asegúrate de inicializarlas aquí o en algún otro lugar necesario
-
+    this.usuario = authService.usuario;
   }
 
   // leer el archivo json de usuarios y doctores y mostrarlos en la tabla
   async verDoctores() {
     try {
 
-      const url = 'http://192.168.0.26:3000/doctores';
+      const url = 'http://localhost:3000/doctores';
 
       const opciones = {
         method: 'GET',
