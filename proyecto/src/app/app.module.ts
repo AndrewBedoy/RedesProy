@@ -59,7 +59,7 @@ import { MedicamentosComponent } from './medicamentos/medicamentos.component';7
     MatNativeDateModule,
     IgxTimePickerModule,
 	  IgxInputGroupModule,
-	  IgxIconModule
+	  IgxIconModule,
 
     HttpClientModule,
     MatPaginatorModule
