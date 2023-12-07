@@ -1,23 +1,35 @@
 <body class="container mt-5">
 
-    <h1>Contáctanos</h1>
+  <h1>Contáctanos</h1>
 
-    <form action="/enviar" method="post" >
-        <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" required>
-        </div>
+  <div style="display: flex; justify-content: space-between;">
+    <form action="/enviar" method="post" style="flex: 1; margin-right: 20px;">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" required>
+      </div>
 
-        <div class="form-group">
-            <label for="email">Correo electrónico:</label>
-            <input type="email" class="form-control" id="email" name="email" required>
-        </div>
+      <div class="form-group">
+        <label for="email">Correo electrónico:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
 
-        <div class="form-group">
-            <label for="mensaje">Mensaje:</label>
-            <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required></textarea>
-        </div>
+      <div class="form-group">
+        <label for="mensaje">Mensaje:</label>
+        <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required></textarea>
+      </div>
 
-        <button type="submit" class="btn btn-primary">Enviar</button>
+      <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
+    
+    <div class="vertical-line"></div>
+
+    <div class="form-check" *ngIf="authService.tipo == 'doctor' || authService.tipo == 'administrador'" style="flex: 1;">
+      <label class="form-check-label" for="incluirFecha">¿Se trata de una cita presencial con algún administrador?</label>
+      <button class="btn btn-primary my-2" (click)="mostrarCalendario()">
+        Agendar cita
+      </button>
+      <div id="iframeContainer"></div>
+    </div>
+  </div>
 </body>

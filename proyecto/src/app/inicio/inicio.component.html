@@ -9,38 +9,61 @@
   <h1>BayMax</h1>
   <h4>Una nueva forma de cuidar tu salud</h4>
 </div>
-<div class="video-container">
-  <iframe
-    width="100%"
-    height="415"
-    [src]="'https://www.youtube.com/embed/9XaS93WMRQQ'"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-inpicture"
-    allowfullscreen
-  ></iframe>
+<div class="container">
+  <div class="jumbotron mt-4">
+      <h1 class="display-4">BayMax: Tu Socio en el Cuidado de la Salud</h1>
+      <p class="lead">Más que una farmacia; somos tu aliado en el cuidado de la salud. Brindamos servicios integrales que van más allá de la simple dispensación de medicamentos.</p>
+  </div>
+
+  <div class="row">
+      <div class="col-md-8">
+          <h2>Nuestros Servicios</h2>
+          <p>En BayMax, nos enorgullece ofrecer consultas médicas de alta calidad con nuestro equipo de profesionales capacitados. Agenda tus citas médicas fácilmente a través de nuestra plataforma en línea.</p>
+          <p>Mantenemos un expediente médico en línea seguro y confiable, brindándote acceso rápido a tu historial de salud. Además, ofrecemos información completa sobre medicamentos para mantenerte bien informado.</p>
+      </div>
+      <div class="col-md-4">
+          <h2>Contacto</h2>
+          <p>Para comunicarte con nostros, <a routerLink="/contacto">haz clic aquí</a></p>
+      </div>
+  </div>
+
+  <div class="row mt-4">
+      <div class="col-md-12">
+          <h2>Únete a Nuestra Comunidad</h2>
+          <p>Síguenos en redes sociales para mantenerte informado sobre noticias, consejos de salud y eventos especiales:</p>
+          <p>
+              <a href="#" class="btn btn-primary">Facebook</a>
+              <a href="#" class="btn btn-info mx-2">Twitter</a>
+              <a href="#" class="btn btn-danger">Instagram</a>
+          </p>
+      </div>
+  </div>
+
+  <div class="row mt-4">
+      <div class="col-md-12">
+          <p>En BayMax, tu salud es nuestra prioridad. Confía en nosotros para ofrecerte atención médica de calidad y servicios que superan tus expectativas. ¡Bienvenido a BayMax, tu socio en el cuidado de la salud!</p>
+      </div>
+  </div>
 </div>
 <section class="appointment-section">
   <div class="appointment-container">
-    <h2>Agenda una cita en nuestra farmacia</h2>
+    <h2>¡Agenda una cita con nuestros doctores!</h2>
     <p>
-      Para agendar una cita en nuestra farmacia, sigue los siguientes pasos:
+      Para agendar una cita, sigue los siguientes pasos:
     </p>
     <br />
     <ol>
       <li>
-        <span>1</span> Ingresa a nuestra página web y selecciona la opción de
-        "Solicita cita".
+        <span>1</span> Ingresa a tu cuenta y selecciona la opción de <a routerLink="/doctores">Doctores</a>.
       </li>
       <br /><br />
-      <li><span>2</span> Llena tus datos personales en el formulario.</li>
-      <br /><br />
       <li>
-        <span>3</span> Selecciona la fecha y la hora que más te convenga para tu
+        <span>2</span> Con el doctor que elijas, selecciona la fecha y la hora que más te convenga para tu
         cita.
       </li>
       <br /><br />
       <li>
-        <span>4</span> ¡Listo! Te esperamos en nuestra farmacia el día y hora
+        <span>3</span> ¡Listo! El doctor será notificado del día y hora
         que señalaste.
       </li>
     </ol>

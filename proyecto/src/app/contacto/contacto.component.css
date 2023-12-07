@@ -1,0 +1,5 @@
+.vertical-line {
+    border-left: 2px solid gray; /* Puedes ajustar el color y grosor según tus preferencias */
+    height: 400px; /* Ajusta la altura según tus necesidades */
+    margin-left: 20px;
+  }
