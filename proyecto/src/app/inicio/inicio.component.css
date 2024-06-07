@@ -1,10 +1,11 @@
 .banner {
     z-index: -1;
-  background-image: linear-gradient(
-      rgba(116, 235, 195, 0.5),
-      rgba(21, 39, 245, 0.5)
+  background-image:
+    linear-gradient(
+      rgba(27, 46, 78, 0.5),
+      rgba(15, 13, 44, 0.747)
     ),
-    url("../../assets/img/fondo_banner2.jpg");
+    url("../../assets/img/fondo_baymax.png");
   background-size: cover;
   background-position: center;
   color: #fff;
