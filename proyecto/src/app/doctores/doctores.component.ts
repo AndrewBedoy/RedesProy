@@ -1,17 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { AlertService } from '../services/alert.service';
-
-import {
-  MatDatepicker,
-  MatDatepickerModule,
-} from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
-import { PickerInteractionMode } from 'igniteui-angular';
-import { Time } from '@angular/common';
-import { TimeFormatPipe } from 'igniteui-angular/lib/time-picker/time-picker.pipes';
-
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-doctores',
@@ -20,44 +10,37 @@ import { TimeFormatPipe } from 'igniteui-angular/lib/time-picker/time-picker.pip
 })
 export class DoctoresComponent {
   doctores: any[] = [];
-
-  selectedDate!: Date;
+  usuarios: any[] = [];
+  doctor: any;
+  usuario: any;
+  selectedDate: Date = new Date();
   selectedTime: string = '';
   numId: number = 0;
   correo: string = 'prueba@ejemplo.com';
   contrasena: string = 'contrasenaPrueba';
-  usuario: any;
-  public mode: PickerInteractionMode = PickerInteractionMode.DropDown;
-  public format = 'hh:mm tt';
+  combinedList: any;
 
   constructor(
     private authService: AuthService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private dataService: DataService
   ) {
     this.verDoctores();
-    this.selectedDate = new Date(); // Asegúrate de inicializarlas aquí o en algún otro lugar necesario
     this.usuario = authService.usuario;
   }
 
-  // leer el archivo json de usuarios y doctores y mostrarlos en la tabla
   async verDoctores() {
     try {
-
-      const url = 'http://localhost:3000/doctores';
-
-      const opciones = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-
-
-      const response = await fetch(url, opciones);
-      const data = await response.json();
-      this.doctores = data;
+      const doctores = await this.dataService.getDoctor().toPromise();
+      const usuarios = await this.dataService.getUsuario().toPromise();
+      console.log("#doctores", doctores.length);
+      console.log("#usuarios", usuarios.length);
+      this.combinedList = doctores.map((doctor: { id_usuario: any; }) => ({
+        ...doctor,
+        usuario: usuarios.find((usuario: { id: any; }) => usuario.id === doctor.id_usuario)
+      }));
     } catch {
-      console.log('Error al obtener los datos de los doctores');
+      console.log('Error al obtener los datos de los doctores o usuarios');
     }
   }
 
@@ -72,52 +55,35 @@ export class DoctoresComponent {
     { value: '20:00', display: '8:00 PM' },
   ];
 
-  async capturar(index: number):  Promise<void> {
+  async capturar(index: number): Promise<void> {
     var doctor = this.doctores[index];
-   
-    
     const formattedDate = this.formatDate(this.selectedDate).toString();
     const userId = this.authService.usuario;
 
     var nuevaCita = {
-      id: this.generarIdCita(), // Generar ID de la cita
       id_paciente: userId.id,
       id_doctor: doctor.id, // ID del doctor
-      hora: this.selectedTime, //Hora seleccionada
+      hora: this.selectedTime, // Hora seleccionada
       fecha: formattedDate, // Fecha seleccionada
-      estado: 'P', // estado de la cita
+      estado: 'P', // Estado de la cita
     };
 
-    const url = 'http://192.168.0.26:3000/guardarCita';
-    console.log(nuevaCita);
-      const opciones = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(nuevaCita)
-      };
-   
-      try {
-        const respuesta = await fetch(url, opciones);
-   
-        if (respuesta.ok) {
-          this.alertService.mostrarAlerta(
-            'Cita Agendada!' ,
-            'consulta tu cuenta para ver tus citas',
-            'success'
-            
-          );
-        } else {
-          console.error('Error al enviar datos al servidor:', respuesta.status);
-        }
-      } catch (error) {
-        console.error('Error de red:', error);
+    try {
+      const respuesta = await this.dataService.guardarCita(nuevaCita).toPromise();
+      if (respuesta) {
+        this.alertService.mostrarAlerta(
+          'Cita Agendada!',
+          'Consulta tu cuenta para ver tus citas',
+          'success'
+        );
+      } else {
+        console.error('Error al enviar datos al servidor');
       }
-
-    
+    } catch (error) {
+      console.error('Error de red:', error);
     }
- 
+  }
+
   formatDate(date: Date): string {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
@@ -130,6 +96,4 @@ export class DoctoresComponent {
     this.numId++;
     return this.numId;
   }
-  
-
 }

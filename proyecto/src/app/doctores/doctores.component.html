@@ -16,34 +16,30 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let doctor of doctores; let i = index">
-      <td>
-        {{ doctor.nombre + " " + doctor.apellido_p + " " + doctor.apellido_m }}
+    <tr *ngFor="let doctor of combinedList; let i = index">
+      <td *ngIf="doctor.usuario">
+        {{ doctor.usuario.nombre + ' ' + doctor.usuario.apellido_P}}
       </td>
-      <td>{{ doctor.doctor.especialidad }}</td>
-      <td *ngIf="usuario.tipo == 'paciente'">
+      <td>{{ doctor.especialidad }}</td>
+      <td *ngIf="doctor.usuario?.tipo === 'paciente'">
         <mat-form-field>
           <mat-label>Selecciona una fecha</mat-label>
-          <input matInput [matDatepicker]="picker" [(ngModel)]="doctor.selectedDate"/>
-        
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="doctor.selectedDate" />
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </td>
-      <td *ngIf="usuario.tipo == 'paciente'">
+      <td *ngIf="doctor.usuario?.tipo === 'paciente'">
         <select [(ngModel)]="selectedTime" name="selectedTime">
           <option *ngFor="let hora of horasDisponibles" [value]="hora.value">{{ hora.display }}</option>
         </select>
       </td>
-      <td *ngIf="usuario.tipo == 'paciente'">
+      <td *ngIf="doctor.usuario?.tipo === 'paciente'">
         <button (click)="capturar(i)">Agendar cita</button>
       </td>
     </tr>
+    
   </tbody>
 </table>
-
   <div id="iframeContainer"></div>
 </div>

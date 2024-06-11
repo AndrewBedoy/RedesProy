@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-admin',
@@ -14,15 +15,13 @@ export class AdminComponent {
   pacientes: any;
   admins: any;
   tabla: string = 'usuarios';
-  constructor(authService: AuthService) {
-    
-    const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
-    if(usuario) {
-      authService.iniciarSesion(usuario);
-      authService.tipo = usuario.tipo;
-      console.log(usuario.tipo);
-    }
+  tipo: string = 'none';
+  dataService: any;
+  constructor(authService: AuthService, dataService: DataService) {
+    this.dataService = dataService;
     this.usuario = authService.usuario;
+    console.log(this.usuario.tipo);
+    this.tipo = authService.obtenerTipo();
     this.recuperarDatos();
   }
 
@@ -35,17 +34,8 @@ export class AdminComponent {
 
   async obtenerUsuarios() {
     try {
-      const url = 'http://localhost:3000/registros';
-      const opciones = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-  
-      const response = await fetch(url, opciones);
-      const data = await response.json();
-      this.usuarios = data;
+      const response = await this.dataService.getUsuario().toPromise();
+      this.usuarios = response;
     }
     catch {
       console.log("Error al obtener los datos de los usuarios");
@@ -54,17 +44,8 @@ export class AdminComponent {
 
   async obtenerDoctores() {
     try {
-      const url = 'http://localhost:3000/doctores';
-      const opciones = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-  
-      const response = await fetch(url, opciones);
-      const data = await response.json();
-      this.doctores = data;
+      const response = await this.dataService.getDoctor().toPromise();
+      this.doctores = response;
     }
     catch {
       console.log("Error al obtener los datos de los doctores");
@@ -73,17 +54,8 @@ export class AdminComponent {
 
   async obtenerPacientes() {
     try {
-      const url = 'http://localhost:3000/pacientes';
-      const opciones = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-  
-      const response = await fetch(url, opciones);
-      const data = await response.json();
-      this.pacientes = data;
+      const response = await this.dataService.getPaciente().toPromise();
+      this.pacientes = response;
     }
     catch {
       console.log("Error al obtener los datos de los pacientes");
@@ -92,20 +64,11 @@ export class AdminComponent {
 
   async obtenerAdmins() {
     try {
-      const url = 'http://localhost:3000/admins';
-      const opciones = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-  
-      const response = await fetch(url, opciones);
-      const data = await response.json();
-      this.admins = data;
+      const response = await this.dataService.getAdministrador().toPromise();
+      this.admins = response;
     }
     catch {
-      console.log("Error al obtener los datos de los admins");
+      console.log("Error al obtener los datos de los administradores");
     }
   }
 

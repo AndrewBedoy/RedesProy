@@ -13,6 +13,12 @@ export class AuthService {
     // Lógica para iniciar sesión (puedes implementarla según tus necesidades)
     this.estaAutenticado = true;
     this.usuario = usuario;
+    if (usuario && usuario.tipo_usuario) {
+      this.tipo = usuario.tipo_usuario.toLowerCase();
+    } else {
+      // Manejar el caso en el que usuario o usuario.tipo_usuario sea undefined
+      console.error('Tipo de usuario no definido.');
+    }
   }
 
   cerrarSesion() {
@@ -20,6 +26,14 @@ export class AuthService {
     this.estaAutenticado = false;
     this.usuario = null;
     this.tipo = '';
+  }
+
+  obtenerTipo(): string {
+    return this.tipo;
+  }
+
+  obtenerId(): number {
+    return this.usuario.id;
   }
 
   obtenerEstado(): boolean {

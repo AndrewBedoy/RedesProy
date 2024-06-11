@@ -1,4 +1,4 @@
-<div *ngIf="usuario.tipo == 'administrador'; else noAdmin">
+<div *ngIf="tipo == 'administrador'; else noAdmin">
   <div>
     <!-- Botones de pestañas -->
     
@@ -23,7 +23,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let usuario of usuarios">
-              <td>{{ usuario.nombre + ' ' + usuario.apellido_p + ' ' + usuario.apellido_m }}</td>
+              <td>{{ usuario.nombre + ' ' + usuario.apellido_P + ' ' + usuario.apellido_m }}</td>
               <td>{{ usuario.direccion }}</td>
               <td>{{ usuario.correo }}</td>
               <td>{{ usuario.telefono }}</td>
@@ -46,7 +46,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let doctor of doctores">
-              <td>{{ doctor.nombre + ' ' + doctor.apellido_p + ' ' + doctor.apellido_m }}</td>
+              <td>{{ doctor.nombre + ' ' + doctor.apellido_P + ' ' + doctor.apellido_m }}</td>
               <td>{{ doctor.direccion }}</td>
               <td>{{ doctor.correo }}</td>
               <td>{{ doctor.telefono }}</td>
@@ -68,7 +68,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let paciente of pacientes">
-              <td>{{ paciente.nombre + ' ' + paciente.apellido_p + ' ' + paciente.apellido_m }}</td>
+              <td>{{ paciente.nombre + ' ' + paciente.apellido_P + ' ' + paciente.apellido_m }}</td>
               <td>{{ paciente.direccion }}</td>
               <td>{{ paciente.correo }}</td>
               <td>{{ paciente.telefono }}</td>
@@ -90,7 +90,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let admin of admins">
-              <td>{{ admin.nombre + ' ' + admin.apellido_p + ' ' + admin.apellido_m }}</td>
+              <td>{{ admin.nombre + ' ' + admin.apellido_P + ' ' + admin.apellido_m }}</td>
               <td>{{ admin.direccion }}</td>
               <td>{{ admin.correo }}</td>
               <td>{{ admin.telefono }}</td>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { AlertService } from '../services/alert.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-cuenta',
@@ -16,29 +17,37 @@ export class CuentaComponent {
   pacientes: any;
   tabla: string = 'tPacientes';
   citas: any;
+  expedientes: any;
+  alergiaSeleccionada: number | null = null; // Variable para almacenar la alergia seleccionada
 
   alergiasPorPaciente = new Map<number, string[]>();
   alertService: any;
+  dataService: any;
+  authService: AuthService;
+  currentPage: number = 1;
+  itemsPerPage: number = 50;
+  totalItems: number = 0;
+  Math = Math; // Exponer Math como propiedad del componente
 
-  constructor(authService: AuthService, alertService: AlertService) {
-    const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
-    if(usuario) {
-      authService.iniciarSesion(usuario);
-      authService.tipo = usuario.tipo;
-      console.log(usuario.tipo);
-    }
-    //this.usuario = authService.usuario;
-    this.tipo = authService.tipo;
+  constructor(authService: AuthService, alertService: AlertService, dataService: DataService) {
+    this.usuario = authService.usuario;
+    this.tipo = authService.obtenerTipo();
     this.autenticado = authService.obtenerEstado();
     this.setSaludo();
     this.alertService = alertService;
-    this.usuario = authService.usuario;
-    console.log(authService.tipo);
+    this.dataService = dataService;
+    this.authService = authService;
+    if (this.tipo === 'doctor') {
+      this.verPacientes();
+    }
+    else if(this.tipo === 'paciente') {
+      this.verCitasPaciente();
+      console.log("Paciente logueado");
+    }
   }
 
   setSaludo() {
     const horaActual = new Date().getHours();
-
     if (horaActual >= 0 && horaActual < 12) {
       this.saludo = 'Buenos días';
     } else if (horaActual >= 12 && horaActual < 18) {
@@ -49,45 +58,52 @@ export class CuentaComponent {
   }
 
   pacienteActual: any;
-  abrirModal(paciente: any) {
-    this.pacienteActual = paciente;
-  }
+  alergia_descripcion: any;
 
+  async abrirModal(paciente: any) {
+    if(this.alergia_descripcion == null)
+      try {
+        const response = await this.dataService.getAlergia().toPromise();
+        if (response) {
+          this.alergia_descripcion = response;
+          this.pacienteActual = paciente;
+        }
+      } catch (error) {
+        this.alertService.mostrarAlerta('Error al obtener los datos de las alergias', 'Error', 'error');
+        console.error('Error de red al iniciar sesión:', error);
+      }
+    
+  }
+  
   async verPacientes() {
     this.tabla = 'tPacientes';
     await this.verificarPacientes();
   }
 
-  async verCitas() {
-    this.tabla = 'tCitas';
-    await this.verificarCitas();
-  }
+  async verExpediente() {
+    this.tabla = 'tExpedientes';
 
-  async verificarCitas() {
     try {
-      const url = 'http://localhost:3000/citas?idUsuario=' + this.usuario.id;
-      const opciones = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-  
-      const response = await fetch(url, opciones);
-      const data = await response.json();
-      this.citas = data;
+      const response = await this.dataService.getExpedienteMedicamento(this.authService.obtenerId()).toPromise();
+
+      if (response) {
+        this.expedientes = response;
+      } else {
+        console.error('Error al obtener los datos de las citas');
+      }
     }
-    catch {
-      console.log("Error al obtener los datos de las citas");
+    catch (error) {
+      console.error('Error de red al intentar conseguir los expedientes:', error);
     }
   }
 
   async verAlergiasPacientes() {
     this.tabla = 'tAlergias';
+    this.alergiasPorPaciente = new Map<number, string[]>();
+
     await this.verificarAlergias();
     await this.verificarPacientes();
 
-    this.alergiasPorPaciente = new Map<number, string[]>(); // Reiniciar el mapa
     if(this.alergias && this.pacientes) {
       // Llenar el mapa con las alergias de cada paciente
       this.alergias.forEach((alergia: { id_paciente: any; nombre: any; }) => {
@@ -100,9 +116,6 @@ export class CuentaComponent {
 
         this.alergiasPorPaciente.get(idPaciente)?.push(nombreAlergia);
       });
-
-      // Ahora alergiasPorPaciente contiene las alergias asociadas a cada paciente
-      console.log(this.alergiasPorPaciente);
     }
     else{
       console.log("Error al obtener los datos de las alergias o los pacientes");
@@ -110,82 +123,121 @@ export class CuentaComponent {
   }
 
   async verificarAlergias() {
+    this.alergias = null;
     try {
-      const url = 'http://localhost:3000/alergias';
-      const opciones = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-  
-      const response = await fetch(url, opciones);
-      const data = await response.json();
-      this.alergias = data;
+      const response = await this.dataService.getPacienteAlergia().toPromise();
+      console.log(response.length);
+      if (response) {
+        this.alergias = response;
+        this.totalItems = response.length;
+        return true;
+      }
+      else {
+        return false;
+      }
     }
-    catch {
-      console.log("Error al obtener los datos de las alergias");
+    catch (error){
+      console.log("Error al obtener los datos de las alergias: ", error);
+      return false;
     }
   }
 
   async verificarPacientes() {
+    this.pacientes = null;
     try {
-      const url = 'http://localhost:3000/pacientes';
-      const opciones = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-  
-      const response = await fetch(url, opciones);
-      const data = await response.json();
-      this.pacientes = data;
-    }
-    catch {
-      console.log("Error al obtener los datos de los pacientes");
+      const response = await this.dataService.getPaciente().toPromise();
+      
+      if (response) {
+        this.pacientes = response;
+        return true;
+      } else {
+        // this.errorInicioSesion = true;
+        return false;
+      }
+    } catch (error) {
+      console.error('Error de red al iniciar sesión:', error);
+      return false;
     }
   }
 
-  async registrarAlergia(idPaciente: any): Promise<void> {
-    await this.verificarAlergias();
-
-    const nombreAlergia = document.getElementById('nombreAlergia') as HTMLInputElement;
-    const descripcionAlergia = document.getElementById('descripcionAlergia') as HTMLInputElement;
-    const idNuevoRegistro = this.alergias[this.alergias.length - 1].id + 1;
-    
-    if(nombreAlergia.value != "" && descripcionAlergia.value != "") {
-      const nuevoRegistro = {
-        id: idNuevoRegistro,
-        nombre: nombreAlergia.value,
-        descripcion: descripcionAlergia.value,
-        id_paciente: idPaciente,
-      };
+  get paginatedPacientes(): any[] {
+    if (!this.pacientes) {
+      return [];
+    }
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    return this.pacientes.slice(start, end);
+  }
   
-      const url = 'http://localhost:3000/registrarAlergia';
-      const opciones = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(nuevoRegistro)
-      };
-    
+
+  changePage(page: number): void {
+    this.currentPage = page;
+  }
+  
+  async registrarAlergia(idPaciente: any): Promise<void> {
+    if(this.alergia_descripcion == null) {
+      this.alertService.mostrarAlerta('Seleccione una alergia', 'Error', 'error');
+      return;
+    }
+
+    var idAlergia: number = 0;
+
+    if (this.alergiaSeleccionada != null) 
+      idAlergia = parseInt(this.alergiaSeleccionada.toString(), 10);
+    else {
+      this.alertService.mostrarAlerta('Seleccione una alergia', 'Error', 'error');
+      return;
+    }
+
+    if (this.alergiaSeleccionada !== null) {
       try {
-        const respuesta = await fetch(url, opciones);
-    
-        if (respuesta.ok) {
-          console.log('Registro enviado al servidor.');
-          this.alertService.mostrarAlerta('Registro enviado al servidor.', 'Registro exitoso', 'success');
+        const response = await this.dataService.registrarAlergiaPaciente(idPaciente, idAlergia).toPromise();
+
+        if (response && response.message === 'Alergia registrada exitosamente.') {
+          this.alertService.mostrarAlerta('Alergia registrada correctamente', 'Registro exitoso', 'success');
         } else {
-          console.error('Error al enviar datos al servidor:', respuesta.status);
+          console.error('Error al registrar la alergia (response):', response);
+          this.alertService.mostrarAlerta('Error al registrar la alergia', 'Error', 'error');
         }
       } catch (error) {
-        console.error('Error de red:', error);
+        this.alertService.mostrarAlerta('Error al registrar la alergia', 'Error', 'error');
+        console.error('Error al registrar la alergia (error):', error);
+      }
+    } else {
+      this.alertService.mostrarAlerta('Alergia no encontrada', 'Error', 'error');
+      console.error('Alergia no encontrada');
+    }
+  }
+
+  async verCitas() {
+    this.tabla = 'tCitas';
+    try {
+      const response = await this.dataService.getCitas(this.authService.obtenerId()).toPromise();
+
+      if (response) {
+        this.citas = response;
+      } else {
+        console.error('Error al obtener los datos de las citas');
       }
     }
-    else {
-      this.alertService.mostrarAlerta('Ingresa la información en ambos campos', 'Error', 'error');
+    catch (error) {
+      console.error('Error de red al intentar conseguir las citas:', error);
+    }
+  }
+
+  async verCitasPaciente() {
+    this.tabla = 'tCitas';
+    try {
+      const response = await this.dataService.getCitasPaciente(this.authService.obtenerId()).toPromise();
+
+      if (response) {
+        this.citas = response;
+      } else {
+        console.error('Error al obtener los datos de las citas');
+      }
+    }
+    catch (error) {
+      console.error('Error de red al intentar conseguir las citas:', error);
     }
   }
 }
